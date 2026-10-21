@@ -1,4 +1,4 @@
-# AskMongo
+# Ora
 
 A read-only natural-language MongoDB analyst. Idea by **Chenyun Yang (CMU)**.
 
