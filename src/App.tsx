@@ -1,5 +1,6 @@
+import { Console } from './components/console';
 import React from 'react';
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, CheckCheck, Code2, Copy, Database, Fingerprint, Layers3, ShieldCheck, Sparkles, Terminal, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, CheckCheck, Code2, Copy, Database, Fingerprint, Layers3, ShieldCheck, Sparkles, Terminal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const exampleQuery = `db.movies.find({\n  cast: "Tom Hanks",\n  year: { $gt: 2000 }\n}).limit(25)`;
@@ -63,11 +64,4 @@ function Landing() {
 
 function Footer() { return <footer className="footer shell"><Brand /><span>Natural language. Transparent queries.</span><span>Built around MongoDB.</span></footer>; }
 
-function ConsolePreview() {
-  const [question, setQuestion] = React.useState(new URLSearchParams(window.location.search).get('example') === 'tom-hanks' ? 'Movies starring Tom Hanks released after 2000' : '');
-  const [notice, setNotice] = React.useState(false);
-  const examples = ['Movies starring Tom Hanks released after 2000', 'Which genres have the most movies?', 'Average movie rating by decade'];
-  return <><Header /><main className="console shell"><div className="console-topline"><span><Database size={15} /> sample_mflix</span><span className="preview-label">Design preview</span></div><h1>A good question<br />is a good start.</h1><p className="console-description">Explore the sample movie dataset in your own words.</p><form onSubmit={e => { e.preventDefault(); setNotice(true); }}><label className="sr-only" htmlFor="question">Ask a question about movies</label><div className="query-input"><Sparkles size={20} /><input id="question" value={question} onChange={e => setQuestion(e.target.value)} placeholder="What would you like to know?" required maxLength={2000} /><Button type="submit" aria-label="Ask your question"><ArrowRight size={19} /></Button></div></form><div className="example-questions">{examples.map(example => <button key={example} onClick={() => {setQuestion(example); document.getElementById('question')?.focus();}}>{example}<ArrowUpRight size={14} /></button>)}</div><div className="review-notice" role="status"><ShieldCheck size={18} /><div><strong>{notice ? 'The agent is not connected yet.' : 'The console is next.'}</strong><p>This build is awaiting the landing-page design review. Queries are not executed, and no database results are displayed.</p></div>{notice && <button onClick={() => setNotice(false)} aria-label="Dismiss"><X size={16} /></button>}</div><a href="/" className="secondary-link">Back to the landing page</a></main><Footer /></>;
-}
-
-export default function App() { return window.location.pathname === '/console' ? <ConsolePreview /> : <Landing />; }
+export default function App() { return window.location.pathname === '/console' ? <><Header /><Console /><Footer /></> : <Landing />; }

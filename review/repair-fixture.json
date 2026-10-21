@@ -1,0 +1,135 @@
+{
+  "evidence": "DETERMINISTIC UNIT FIXTURE ONLY. No Atlas or NVIDIA calls. Live repair check pending credentials.",
+  "before": {
+    "collection": "movies",
+    "query": {
+      "operation": "find",
+      "filter": {
+        "release_year": 2001
+      },
+      "limit": 25
+    },
+    "explanation": "Find movies released in 2001."
+  },
+  "after": {
+    "collection": "movies",
+    "query": {
+      "operation": "find",
+      "filter": {
+        "year": 2001
+      },
+      "limit": 25
+    },
+    "explanation": "Find movies released in 2001."
+  },
+  "response": {
+    "sessionId": "repair-evidence-fixture",
+    "mongoQuery": {
+      "collection": "movies",
+      "query": {
+        "operation": "find",
+        "filter": {
+          "year": 2001
+        },
+        "limit": 25
+      },
+      "explanation": "Find movies released in 2001."
+    },
+    "explanation": "Find movies released in 2001.",
+    "results": [
+      {
+        "title": "TEST FIXTURE — not an Atlas movie",
+        "year": 2001
+      }
+    ],
+    "steps": [
+      {
+        "stage": "Reading schema",
+        "detail": "Reading field types and three sample movie documents.",
+        "status": "running"
+      },
+      {
+        "stage": "Reading schema",
+        "detail": "Schema ready for sample_mflix.movies; inferred from three sample documents.",
+        "status": "complete"
+      },
+      {
+        "stage": "Writing query",
+        "detail": "Generating a structured read-only MongoDB query.",
+        "status": "running"
+      },
+      {
+        "stage": "Writing query",
+        "detail": "{\n  \"collection\": \"movies\",\n  \"query\": {\n    \"operation\": \"find\",\n    \"filter\": {\n      \"release_year\": 2001\n    },\n    \"limit\": 25\n  },\n  \"explanation\": \"Find movies released in 2001.\"\n}",
+        "status": "complete"
+      },
+      {
+        "stage": "Safety check",
+        "detail": "Checking collection, operation, nested operators, and resource limits.",
+        "status": "running"
+      },
+      {
+        "stage": "Safety check",
+        "detail": "Allowed: sample_mflix.movies; approved read operations only; maximum 25 documents and 5 seconds.\n{\n  \"operation\": \"find\",\n  \"filter\": {\n    \"release_year\": 2001\n  },\n  \"limit\": 25\n}",
+        "status": "complete"
+      },
+      {
+        "stage": "Running",
+        "detail": "Executing attempt 1 of at most 2.",
+        "status": "running"
+      },
+      {
+        "stage": "Running",
+        "detail": "0 document(s) returned.",
+        "status": "complete"
+      },
+      {
+        "stage": "Repairing…",
+        "detail": "{\n  \"reason\": \"No results. Check field names and types once; preserve all user constraints. An empty result may be correct.\",\n  \"before\": {\n    \"collection\": \"movies\",\n    \"query\": {\n      \"operation\": \"find\",\n      \"filter\": {\n        \"release_year\": 2001\n      },\n      \"limit\": 25\n    },\n    \"explanation\": \"Find movies released in 2001.\"\n  }\n}",
+        "status": "running"
+      },
+      {
+        "stage": "Repairing…",
+        "detail": "{\n  \"collection\": \"movies\",\n  \"query\": {\n    \"operation\": \"find\",\n    \"filter\": {\n      \"year\": 2001\n    },\n    \"limit\": 25\n  },\n  \"explanation\": \"Find movies released in 2001.\"\n}",
+        "status": "complete"
+      },
+      {
+        "stage": "Safety check",
+        "detail": "Checking collection, operation, nested operators, and resource limits.",
+        "status": "running"
+      },
+      {
+        "stage": "Safety check",
+        "detail": "Allowed: sample_mflix.movies; approved read operations only; maximum 25 documents and 5 seconds.\n{\n  \"operation\": \"find\",\n  \"filter\": {\n    \"year\": 2001\n  },\n  \"limit\": 25\n}",
+        "status": "complete"
+      },
+      {
+        "stage": "Running",
+        "detail": "Executing attempt 2 of at most 2.",
+        "status": "running"
+      },
+      {
+        "stage": "Running",
+        "detail": "1 document(s) returned.",
+        "status": "complete"
+      },
+      {
+        "stage": "Responding",
+        "detail": "Find movies released in 2001.",
+        "status": "complete"
+      },
+      {
+        "stage": "Chart advisor",
+        "detail": "These results do not contain a suitable pair of flat chart axes.",
+        "status": "complete"
+      },
+      {
+        "stage": "Done",
+        "detail": "1 document(s). One repair review performed.",
+        "status": "complete"
+      }
+    ],
+    "repaired": true,
+    "latencyMs": 0
+  }
+}

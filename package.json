@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "concurrently -k -n web,api \"vite --host 127.0.0.1\" \"tsx watch server/index.ts\"",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview --host 127.0.0.1"
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --import tsx --test server/tests/*.test.ts",
+    "test:repair": "node --import tsx scripts/repair-evidence.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.5.0",
@@ -14,8 +16,10 @@
     "clsx": "^2.1.1",
     "express": "^5.3.0",
     "lucide-react": "^1.61.0",
+    "mongodb": "^7.7.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "react-spring": "npm:@react-spring/web@^10.1.2",
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {

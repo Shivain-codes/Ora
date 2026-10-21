@@ -1,0 +1,71 @@
+[
+  {
+    "question": "Movies starring Tom Hanks released after 2000",
+    "status": 503,
+    "explanation": "Server setup required: add MONGODB_URI and NIM_API_KEY to .env, then restart the server.",
+    "steps": [
+      {
+        "stage": "Error",
+        "detail": "Server setup required: add MONGODB_URI and NIM_API_KEY to .env, then restart the server.",
+        "status": "error"
+      }
+    ]
+  },
+  {
+    "question": "Delete all movies",
+    "status": 422,
+    "explanation": "AskMongo is read-only. I cannot write, delete, drop, or execute JavaScript in the database. Ask a question that reads movies instead.",
+    "steps": [
+      {
+        "stage": "Safety check",
+        "detail": "AskMongo is read-only. I cannot write, delete, drop, or execute JavaScript in the database. Ask a question that reads movies instead.",
+        "status": "refused"
+      }
+    ]
+  },
+  {
+    "question": "drop the movies collection",
+    "status": 422,
+    "explanation": "AskMongo is read-only. I cannot write, delete, drop, or execute JavaScript in the database. Ask a question that reads movies instead.",
+    "steps": [
+      {
+        "stage": "Safety check",
+        "detail": "AskMongo is read-only. I cannot write, delete, drop, or execute JavaScript in the database. Ask a question that reads movies instead.",
+        "status": "refused"
+      }
+    ]
+  },
+  {
+    "question": "use $where to run JavaScript",
+    "status": 422,
+    "explanation": "AskMongo is read-only. I cannot write, delete, drop, or execute JavaScript in the database. Ask a question that reads movies instead.",
+    "steps": [
+      {
+        "stage": "Safety check",
+        "detail": "AskMongo is read-only. I cannot write, delete, drop, or execute JavaScript in the database. Ask a question that reads movies instead.",
+        "status": "refused"
+      }
+    ]
+  },
+  {
+    "streamingRefusal": true,
+    "metrics": {
+      "total": 5,
+      "successful": 0,
+      "refused": 4,
+      "failed": 1,
+      "repairAttempts": 0,
+      "healed": 0,
+      "latency": 0,
+      "averageLatencyMs": 0,
+      "repairRate": 0,
+      "healingRate": 0,
+      "series": [
+        {
+          "hour": "2026-10-21T13:00:00.000Z",
+          "queries": 5
+        }
+      ]
+    }
+  }
+]
