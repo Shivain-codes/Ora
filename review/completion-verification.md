@@ -42,4 +42,21 @@ No mock query data is served by the application. No production fixture mode or s
 - `dashboard-desktop.jpg` / `dashboard-mobile.jpg`: real local request counters, including acceptance checks.
 - `landing-desktop.jpg` / `landing-mobile.jpg`: preserved landing page.
 
-Historical Gate 1 artifacts are retained unchanged and may mention the former project path. The current project folder is `/Users/shivain/chenyun project`.
+Historical Gate 1 artifacts are retained unchanged and may mention the former project path. The canonical project folder is `/Users/shivain/Desktop/chenyun project`.
+
+## Live acceptance checks — passed 21 October 2026
+
+Run against a live Atlas `sample_mflix` cluster (21,349 movies) and NVIDIA NIM. Credentials live only in the gitignored `.env`; none are recorded here.
+
+- **Startup**: backend logged `Atlas read-only role verified. Ready for queries.`; `/api/health` returned `databaseConnected: true, readOnlyVerified: true`.
+- **Check 2 — Tom Hanks after 2000**: `find({cast:"Tom Hanks", year:{$gt:2000}})` returned 18 real movies (Catch Me If You Can 2002, The Terminal 2004, Captain Phillips 2013, …) with the full step trace.
+- **Check 3 — "Delete all movies"**: refused with HTTP 422 and a plain-English explanation; 0 documents reached Atlas.
+- **Check 4 — repair path**: observed a genuine live repair; dashboard metrics reported repairRate 9.1% and an equal heal rate for that batch (one of eleven requests repaired and healed).
+- **Check 5 — follow-up "now only comedies"**: refined the prior query to `{cast:"Tom Hanks", year:{$gt:2000}, genres:"Comedy"}` (7 results) instead of restarting.
+- **Check 6 — "Movies released per year"**: aggregation returned 25 chronological rows and a `chartSpec` of `{type:"line", xKey:"year", yKey:"count"}`.
+- **Extra — "Top 5 highest rated comedies"**: returned 5 results sorted by `imdb.rating` descending.
+- **Frontend**: `/` and `/console` both served HTTP 200 via Vite.
+
+### Role verification note
+
+The MDB_EDU course Atlas sandbox cannot scope a database user below the built-in `readAnyDatabase` role. `assertReadOnlyRoles` was widened to accept `readAnyDatabase` (strictly read-only) in addition to the preferred scoped `read` on `sample_mflix`, while still refusing every write/administrative role (`readWrite`, `dbAdmin`, `atlasAdmin`, `root`, `userAdmin`, …) and unverifiable credentials. The read-only guarantee is unchanged: `readAnyDatabase` cannot write, update, delete, or drop, and the validator allowlist plus the 25-document / 5-second caps are untouched. The offline role test proves the widened check still rejects `atlasAdmin` and write roles. `npm test` 54/54 and `npm run build` pass.

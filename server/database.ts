@@ -1,8 +1,17 @@
 import { MongoClient, type Document } from 'mongodb';
 import type { Plan, JsonDoc } from '../shared/types';
 import { MAX_DOCS, MAX_TIME_MS } from './safety';
+// Read-only roles AskMongo accepts. The preferred, least-privilege role is the built-in
+// `read` scoped to sample_mflix. `readAnyDatabase` is also accepted because managed/course
+// Atlas sandboxes (e.g. MDB_EDU) cannot scope a user below it; it is still strictly
+// read-only — it cannot write, update, delete, or drop. Any write/admin role
+// (readWrite, dbAdmin, atlasAdmin, root, userAdmin, clusterAdmin, dbOwner, …) is refused.
+const READ_ONLY_ROLES = new Set(['read', 'readAnyDatabase']);
 export function assertReadOnlyRoles(roles: unknown) {
-  if (!Array.isArray(roles) || !roles.length || roles.some(r => r?.role !== 'read' || r?.db !== 'sample_mflix')) throw new Error('Atlas user must have only the built-in read role on sample_mflix. Remove all other roles; AskMongo refuses unverified or writable credentials.');
+  const ok = Array.isArray(roles) && roles.length > 0 && roles.every(r =>
+    r && typeof r.role === 'string' && READ_ONLY_ROLES.has(r.role) &&
+    (r.role === 'readAnyDatabase' ? r.db === 'admin' : r.db === 'sample_mflix'));
+  if (!ok) throw new Error('Atlas user must be strictly read-only: the built-in read role on sample_mflix, or readAnyDatabase. AskMongo refuses write or administrative roles (readWrite, dbAdmin, atlasAdmin, root, …) and unverifiable credentials.');
 }
 export class Database {
   private client: MongoClient;

@@ -25,6 +25,10 @@ test('rejects alternative collections, options, dangerous keys and code projecti
   assert.throws(()=>validatePlan(plan({operation:'find',filter:{},projection:{title:{$function:{}}}})));
 });
 test('read-only role proof fails closed',()=>{
+  // Accepted: scoped read on sample_mflix (preferred), and the broader read-only readAnyDatabase.
   assertReadOnlyRoles([{role:'read',db:'sample_mflix'}]);
-  for(const roles of [undefined,[],[{role:'readWrite',db:'sample_mflix'}],[{role:'read',db:'other'}],[{role:'read',db:'sample_mflix'},{role:'root',db:'admin'}],[{role:'customRead',db:'sample_mflix'}]])assert.throws(()=>assertReadOnlyRoles(roles));
+  assertReadOnlyRoles([{role:'readAnyDatabase',db:'admin'}]);
+  // Refused: empty/unverifiable, any write or admin role, wrong db scope, readAnyDatabase off admin,
+  // a read-only role mixed with a privileged one, and unknown custom roles.
+  for(const roles of [undefined,[],[{role:'readWrite',db:'sample_mflix'}],[{role:'read',db:'other'}],[{role:'readAnyDatabase',db:'sample_mflix'}],[{role:'atlasAdmin',db:'admin'}],[{role:'read',db:'sample_mflix'},{role:'root',db:'admin'}],[{role:'readAnyDatabase',db:'admin'},{role:'readWrite',db:'sample_mflix'}],[{role:'customRead',db:'sample_mflix'}]])assert.throws(()=>assertReadOnlyRoles(roles));
 });
