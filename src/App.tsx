@@ -45,7 +45,7 @@ function QueryPreview() {
 function Landing() {
   return <><Header /><main>
     <section className="hero shell" aria-labelledby="hero-title">
-      <div className="aurora" aria-hidden="true" />
+      <div className="dot-field" aria-hidden="true" />
       <div className="hero-kicker"><span className="signal-dot" /> A little language. A lot of insight.</div>
       <h1 id="hero-title">Ask your database<br />anything.</h1>
       <p className="hero-description">It writes the query, checks its own work,<br className="desktop-break" /> and charts the answer.</p>
@@ -55,9 +55,9 @@ function Landing() {
     </section>
     <section className="principles shell" id="how-it-works" aria-label="How AskMongo works">
       <div className="principles-intro"><span className="section-label">From question to clarity</span><h2>Your curiosity.<br /> Its next move.</h2><p>A database analyst that shows its work.</p></div>
-      <div className="principle"><span className="principle-icon"><Database size={20} /></span><h3>Starts with your data.</h3><p>Reads your schema before writing a query. Field names, types, and context included.</p></div>
-      <div className="principle"><span className="principle-icon"><ShieldCheck size={20} /></span><h3>Checks its own work.</h3><p>Validates each query. If a result needs another look, it makes one repair attempt.</p></div>
-      <div className="principle"><span className="principle-icon"><Sparkles size={20} /></span><h3>Keeps the thread.</h3><p>Ask “now only comedies.” Your next question picks up where the last one left off.</p></div>
+      <div className="principle-row"><span className="principle-num">01</span><div><h3>Starts with your data.</h3><p>Reads your schema before writing a query. Field names, types, and context included.</p></div></div>
+      <div className="principle-row"><span className="principle-num">02</span><div><h3>Checks its own work.</h3><p>Validates each query. If a result needs another look, it makes one repair attempt.</p></div></div>
+      <div className="principle-row"><span className="principle-num">03</span><div><h3>Keeps the thread.</h3><p>Ask "now only comedies." Your next question picks up where the last one left off.</p></div></div>
     </section>
   </main><Footer /></>;
 }
