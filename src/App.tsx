@@ -1,14 +1,14 @@
 import { Console } from './components/console';
-import { ArrowDown, ArrowRight, ArrowUpRight, Layers3, ShieldCheck } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, Database, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BlurFade } from './components/ui/blur-fade';
 
 function Brand() {
-  return <a href="/" className="brand" aria-label="AskMongo home"><span className="brand-mark" aria-hidden="true"><Layers3 size={21} strokeWidth={1.7} /></span>askmongo<span className="brand-period">.</span></a>;
+  return <a href="/" className="brand" aria-label="AskMongo home"><Database size={22} strokeWidth={1.75} aria-hidden="true" /><span>askmongo<span className="brand-period">.</span></span></a>;
 }
 
 function Header() {
-  return <header className="header shell"><Brand /><nav aria-label="Main navigation"><a className="nav-link" href="/#process">The process</a><a className="nav-link" href="/#questions">Questions</a><span className="nav-divider" /><Button asChild variant="outline"><a href="/console">Open console <ArrowUpRight size={15} /></a></Button></nav></header>;
+  return <header className="header shell"><Brand /><nav aria-label="Main navigation"><a className="nav-link" href="/#process">The process</a><a className="nav-link" href="/#questions">Questions</a><Button asChild><a href="/console">Open console <ArrowUpRight size={15} /></a></Button></nav></header>;
 }
 
 const EXAMPLES = [
