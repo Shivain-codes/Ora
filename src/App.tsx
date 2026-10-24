@@ -1,7 +1,12 @@
 import { Console } from './components/console';
 import React from 'react';
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, CheckCheck, Code2, Copy, Database, Fingerprint, Layers3, ShieldCheck, Sparkles, Terminal } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, CheckCheck, Code2, Copy, Database, Fingerprint, Layers3, MessageCircleQuestion, ShieldCheck, Terminal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { BlurFade } from './components/ui/blur-fade';
+import { CardSpotlight } from './components/ui/card-spotlight';
+import { ShineBorder } from './components/ui/shine-border';
+import { HoverBorderGradient } from './components/ui/hover-border-gradient';
+import { PipelineFlow } from './components/pipeline-flow';
 
 const exampleQuery = `db.movies.find({\n  cast: "Tom Hanks",\n  year: { $gt: 2000 }\n}).limit(25)`;
 
@@ -20,9 +25,9 @@ function QueryPreview() {
     try { await navigator.clipboard.writeText(exampleQuery); setCopied(true); setCopyError(false); }
     catch { setCopyError(true); }
   }
-  return <section id="query-preview" className="query-preview" aria-label="Illustrative query preview">
+  return <section id="query-preview" className="query-preview" aria-label="Illustrative query preview"><ShineBorder shineColor={["#C8FF2E", "#F2F4F8"]} /><CardSpotlight className="rounded-[12px]">
     <div className="preview-chrome"><span><Terminal size={14} /> A question becomes a query</span><span className="preview-label">Illustrative preview</span></div>
-    <div className="prompt-example"><span className="prompt-symbol" aria-hidden="true"><Sparkles size={18} /></span><p>Movies starring Tom Hanks released after 2000</p><a href="/console?example=tom-hanks" aria-label="Open console with this example" className="prompt-submit"><ArrowRight size={19} /></a></div>
+    <div className="prompt-example"><span className="prompt-symbol" aria-hidden="true"><MessageCircleQuestion size={18} /></span><p>Movies starring Tom Hanks released after 2000</p><a href="/console?example=tom-hanks" aria-label="Open console with this example" className="prompt-submit"><ArrowRight size={19} /></a></div>
     <div className="preview-body">
       <div className="trace-preview">
         <div className="panel-label"><Fingerprint size={15} /><span>Every step, in the open</span></div>
@@ -39,20 +44,21 @@ function QueryPreview() {
       </div>
     </div>
     <div className="preview-footer"><span><Database size={13} /> Dataset: <strong>sample_mflix</strong></span><span>No database query has been run in this preview.</span></div>
-  </section>;
+    </CardSpotlight></section>;
 }
 
 function Landing() {
   return <><Header /><main>
     <section className="hero shell" aria-labelledby="hero-title">
       <div className="dot-field" aria-hidden="true" />
-      <div className="hero-kicker"><span className="signal-dot" /> A little language. A lot of insight.</div>
-      <h1 id="hero-title">Ask your database<br />anything.</h1>
-      <p className="hero-description">It writes the query, checks its own work,<br className="desktop-break" /> and charts the answer.</p>
-      <div className="hero-actions"><Button asChild className="hero-cta"><a href="/console">Try the console <ArrowUpRight size={19} /></a></Button><a className="secondary-link" href="#query-preview">See what happens <ArrowDown size={15} /></a></div>
-      <p className="hero-note"><ShieldCheck size={14} /> Built for curiosity. Designed to be read-only.</p>
+      <BlurFade><div className="hero-kicker"><span className="signal-dot" /> A little language. A lot of insight.</div></BlurFade>
+      <BlurFade delay={0.1}><h1 id="hero-title">Ask your database<br />anything.</h1></BlurFade>
+      <BlurFade delay={0.2}><p className="hero-description">It writes the query, checks its own work,<br className="desktop-break" /> and charts the answer.</p></BlurFade>
+      <BlurFade delay={0.3}><div className="hero-actions"><HoverBorderGradient as="a" href="/console" containerClassName="hero-cta" className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold">Try the console <ArrowUpRight size={17} /></HoverBorderGradient><a className="secondary-link" href="#query-preview">See what happens <ArrowDown size={15} /></a></div></BlurFade>
+      <BlurFade delay={0.4}><p className="hero-note"><ShieldCheck size={14} /> Built for curiosity. Designed to be read-only.</p></BlurFade>
       <QueryPreview />
     </section>
+    <section className="shell" aria-label="How a question becomes an answer"><PipelineFlow /></section>
     <section className="principles shell" id="how-it-works" aria-label="How AskMongo works">
       <div className="principles-intro"><span className="section-label">From question to clarity</span><h2>Your curiosity.<br /> Its next move.</h2><p>A database analyst that shows its work.</p></div>
       <div className="principle-row"><span className="principle-num">01</span><div><h3>Starts with your data.</h3><p>Reads your schema before writing a query. Field names, types, and context included.</p></div></div>
